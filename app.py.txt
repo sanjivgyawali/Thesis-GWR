@@ -1,0 +1,54 @@
+from flask import Flask, request, render_template
+import numpy as np
+from joblib import load
+from mgwr.gwr import GWR
+
+# Load the trained GWR model, bandwidth, and data
+try:
+    gwr_results = load('gwr_model.pkl')
+    gwr_bw = load('gwr_bw.pkl')
+    exp_vars, y, coords = load('gwr_data.pkl')
+except Exception as e:
+    print(f"Error loading model or data: {e}")
+    gwr_results, gwr_bw, exp_vars, y, coords = None, None, None, None
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+@app.route('/predict', methods=['POST'])
+def predict():
+    try:
+        # Collect input data from form
+        accommodates = int(request.form['accommodates'])
+        bedrooms = int(request.form['bedrooms'])
+        beds = int(request.form['beds'])
+        review_scores_rating = float(request.form['review_scores_rating'])
+        lat = float(request.form['latitude'])
+        lon = float(request.form['longitude'])
+
+        # Prepare input for prediction (Add Intercept)
+        pred_exp_vars = np.array([[1, accommodates, bedrooms, beds, review_scores_rating]])  # Add intercept term
+        pred_coords = np.array([[lon, lat]])
+
+        # Perform GWR prediction by calculating the dot product
+        gwr_model = GWR(coords, y, exp_vars, gwr_bw)  # Initialize with existing data
+        gwr_fitted = gwr_model.fit()  # Fit the model
+
+        # Compute predictions using the fitted model parameters
+        local_params = gwr_fitted.params  # Extract local parameters
+        predictions = np.sum(pred_exp_vars * local_params.mean(axis=0), axis=1)
+
+        # Inverse log to get actual price
+        predicted_price = np.exp(predictions[0])
+
+        return render_template('index.html', prediction_text=f'Predicted Price: ${predicted_price:.2f}')
+
+    except Exception as e:
+        print(f"Prediction Error: {str(e)}")
+        return render_template('index.html', prediction_text=f'Error: {str(e)}')
+
+if __name__ == "__main__":
+    app.run(debug=True)
