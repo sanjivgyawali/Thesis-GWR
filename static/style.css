@@ -6,69 +6,91 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, #f0f2f5, #dfe9f3);
+    background: linear-gradient(135deg, #e0eafc, #cfdef3);
 }
 
 .container {
     width: 100%;
     max-width: 400px;
     padding: 25px;
-    background: white;
+    background: rgba(255, 255, 255, 0.3);
     border-radius: 12px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(8px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.12);
     text-align: center;
-    margin: auto;
-    /* Ensures proper centering */
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 h1 {
-    color: #333;
     font-size: 22px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 label {
-    font-weight: bold;
+    font-weight: 600;
     display: block;
-    margin: 10px 0 5px;
+    margin: 8px 0 4px;
+    text-align: left;
 }
 
-input {
-    width: calc(100% - 20px);
-    padding: 12px;
-    margin-bottom: 10px;
-    border-radius: 8px;
+/* Fix input width and centering */
+input,
+select {
+    display: block;
+    width: 90%;
+    /* Adjust width for proper centering */
+    max-width: 350px;
+    /* Ensures they don’t stretch too much */
+    margin: 0 auto 10px;
+    /* Centers the input */
+    padding: 10px;
+    border-radius: 6px;
     border: 1px solid #ccc;
-    font-size: 16px;
-    background: #f8f8f8;
-    transition: 0.3s;
-}
-
-input:focus {
-    border-color: #007BFF;
+    font-size: 15px;
+    background: rgba(255, 255, 255, 0.8);
+    transition: 0.3s ease-in-out;
     outline: none;
-    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.2);
 }
 
+/* Input focus effect */
+input:focus,
+select:focus {
+    border-color: #007BFF;
+    box-shadow: 0px 0px 6px rgba(0, 123, 255, 0.4);
+    transform: scale(1.02);
+}
+
+/* Fix select dropdown alignment */
+select {
+    appearance: none;
+    cursor: pointer;
+}
+
+/* Button styling */
 button {
-    width: 100%;
+    width: 90%;
+    max-width: 350px;
     padding: 12px;
-    background: #007BFF;
+    background: linear-gradient(135deg, #007BFF, #0056b3);
     color: white;
     border: none;
     font-weight: bold;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 6px;
     transition: all 0.3s ease;
+    display: block;
+    margin: 10px auto;
 }
 
 button:hover {
-    background: #0056b3;
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, #0056b3, #003d80);
+    transform: scale(1.04);
 }
 
-@media (max-width: 600px) {
-    .container {
-        width: 90%;
-    }
+/* Prediction result styling */
+#predicted-price {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 12px;
+    color: #333;
 }
