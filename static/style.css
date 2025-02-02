@@ -2,40 +2,44 @@ body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #f0f2f5, #dfe9f3);
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    background: linear-gradient(135deg, #f0f2f5, #dfe9f3);
 }
 
 .container {
-    width: 40%;
-    max-width: 500px;
+    width: 100%;
+    max-width: 400px;
     padding: 25px;
     background: white;
     border-radius: 12px;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
     text-align: center;
+    margin: auto;
+    /* Ensures proper centering */
 }
 
 h1 {
     color: #333;
-    font-size: 24px;
+    font-size: 22px;
     margin-bottom: 20px;
 }
 
-input,
-button {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 16px;
+label {
+    font-weight: bold;
+    display: block;
+    margin: 10px 0 5px;
 }
 
 input {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
     background: #f8f8f8;
     transition: 0.3s;
 }
@@ -47,11 +51,14 @@ input:focus {
 }
 
 button {
+    width: 100%;
+    padding: 12px;
     background: #007BFF;
     color: white;
     border: none;
     font-weight: bold;
     cursor: pointer;
+    border-radius: 8px;
     transition: all 0.3s ease;
 }
 
@@ -62,7 +69,6 @@ button:hover {
 
 @media (max-width: 600px) {
     .container {
-        width: 80%;
-        padding: 20px;
+        width: 90%;
     }
 }
